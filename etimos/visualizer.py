@@ -66,4 +66,24 @@ class DataExplorer(object):
 		plt.show()
 		return
 
+	def plot_train_test_distribution(self, X_train, X_test, rows=4, height=13, width=25):
+		"""
+			The method plots the distribution of each feature in the train 
+			and test set. 
+
+			@args
+				X_train : numpy array
+				X_test : numpy array
+				rows : int -> number of rows in the grid to display
+				height, width : int -> dimension of the window
+		"""
+		columns = int(X_train.shape[1]/rows) + 1
+		fig = plt.figure(figsize=(width, height))
+		for i in range(0, X_train.shape[1]):
+			ax = fig.add_subplot(rows, columns, i+1)
+			sns.distplot(X_train[:,i], ax=ax)
+			sns.distplot(X_test[:,i], ax=ax)
+		plt.show()
+		return
+
 		

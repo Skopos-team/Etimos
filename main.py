@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+from sklearn.model_selection import train_test_split
+
 from etimos.visualizer import DataExplorer
 
 # Example of Classification Dataset
@@ -27,7 +29,7 @@ def classification():
 
 	explorer = DataExplorer(label_tag=LABEL_TAG, problem=PROBLEM)
 
-	return explorer, df
+	return explorer, df, X, y
 
 
 def regression():
@@ -48,12 +50,15 @@ def regression():
 
 	explorer = DataExplorer(label_tag=LABEL_TAG, problem=PROBLEM)
 
-	return explorer, df
+	return explorer, df, X, y
 
 def main():
 
 	# explorer, df = classification()
-	explorer, df = regression()
+	explorer, df, X, y = regression()
+
+	# Split train and test
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
 	# First Data Exploration
 	explorer.first_exploration(df)
@@ -69,6 +74,9 @@ def main():
 
 	# PLot Box for each feature
 	explorer.plot_features_box_plot(df)
+
+	# Check if Train and Test are equally distirbuted
+	explorer.plot_train_test_distribution(X_train, X_test)
 
 
 	return
